@@ -1,4 +1,5 @@
 const { chromium } = require('playwright');
+const PORT = process.env.PORT || '5173';
 
 (async () => {
   const browser = await chromium.launch({
@@ -13,7 +14,7 @@ const { chromium } = require('playwright');
   });
   page.on('requestfailed', r => bad.push('FAIL ' + r.url() + ' :: ' + (r.failure() && r.failure().errorText)));
 
-  await page.goto('http://127.0.0.1:5173/', { waitUntil: 'load', timeout: 60000 });
+  await page.goto(`http://127.0.0.1:${PORT}/`, { waitUntil: 'load', timeout: 60000 });
   await page.waitForTimeout(8000);
   await page.click('#lobbyModeLocal').catch(() => {});
   await page.waitForTimeout(1500);

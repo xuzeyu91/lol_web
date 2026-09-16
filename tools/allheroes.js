@@ -1,4 +1,5 @@
 const { chromium } = require('playwright');
+const PORT = process.env.PORT || '5173';
 
 const HEROES = ['Ashe', 'Lux', 'Ahri', 'Ezreal', 'Garen', 'Jinx', 'Yasuo', 'Sett',
   'Darius', 'Ryze', 'DrMundo', 'Malphite', 'MissFortune', 'ElderDragon',
@@ -16,19 +17,19 @@ const HEROES = ['Ashe', 'Lux', 'Ahri', 'Ezreal', 'Garen', 'Jinx', 'Yasuo', 'Sett
     const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
     page.on('response', r => {
       if (r.status() >= 400) {
-        const u = r.url().replace('http://127.0.0.1:5173/static/r20260915-miss-fortune-1/', '');
+        const u = r.url().replace(`http://127.0.0.1:${PORT}/static/r20260915-miss-fortune-1/`, '');
         if (!allBad.has(u)) allBad.set(u, new Set());
         allBad.get(u).add(hero);
       }
     });
     page.on('requestfailed', r => {
-      const u = r.url().replace('http://127.0.0.1:5173/static/r20260915-miss-fortune-1/', '');
+      const u = r.url().replace(`http://127.0.0.1:${PORT}/static/r20260915-miss-fortune-1/`, '');
       if (!allBad.has(u)) allBad.set(u, new Set());
       allBad.get(u).add(hero);
     });
 
     try {
-      await page.goto('http://127.0.0.1:5173/', { waitUntil: 'load', timeout: 60000 });
+      await page.goto(`http://127.0.0.1:${PORT}/`, { waitUntil: 'load', timeout: 60000 });
       await page.waitForTimeout(7000);
       await page.click('#lobbyModeLocal').catch(() => {});
       await page.waitForTimeout(800);

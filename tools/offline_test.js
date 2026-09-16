@@ -1,4 +1,5 @@
 const { chromium } = require('playwright');
+const PORT = process.env.PORT || '5173';
 const fs = require('fs');
 const path = require('path');
 
@@ -17,11 +18,11 @@ const orig = fs.readFileSync(INDEX, 'utf8');
     const ext = [];
     page.on('request', r => {
       const u = r.url();
-      if (!u.startsWith('http://127.0.0.1:5173') && !u.startsWith('blob:') && !u.startsWith('data:')) ext.push(u);
+      if (!u.startsWith(`http://127.0.0.1:${PORT}`) && !u.startsWith('blob:') && !u.startsWith('data:')) ext.push(u);
     });
     let ws = 0;
     page.on('websocket', s => { ws++; });
-    await page.goto('http://127.0.0.1:5173/', { waitUntil: 'load', timeout: 60000 });
+    await page.goto(`http://127.0.0.1:${PORT}/`, { waitUntil: 'load', timeout: 60000 });
     await page.waitForTimeout(7000);
     const state = await page.evaluate(() => ({
       mode: document.documentElement.dataset.onlineMode || '(default)',

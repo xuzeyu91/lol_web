@@ -1,4 +1,5 @@
 const { chromium } = require('playwright');
+const PORT = process.env.PORT || '5173';
 
 (async () => {
   const browser = await chromium.launch({
@@ -9,7 +10,7 @@ const { chromium } = require('playwright');
   const bad = [];
   page.on('response', r => { if (r.status() >= 400) bad.push(r.status() + ' ' + r.url()); });
 
-  await page.goto('http://127.0.0.1:5173/', { waitUntil: 'load', timeout: 60000 });
+  await page.goto(`http://127.0.0.1:${PORT}/`, { waitUntil: 'load', timeout: 60000 });
   await page.waitForTimeout(7000);
   const lobby = await page.evaluate(() => ({
     module: document.documentElement.dataset.gameModule,

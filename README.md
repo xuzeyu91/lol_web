@@ -2,7 +2,7 @@
 
 > 这是 [lol.hanyue.io](https://lol.hanyue.io/) 的 1:1 本地复刻：完整保留原站 DOM、CSS、
 > 游戏 bundle（2.6MB）和全部静态资源（立绘、3D 模型、音效、HUD 图集、海克斯强化图标、地图纹理）。
-> 仓库以轻量形式发布 —— **运行所需的 119MB 资源未入版本控制**，按下方"首次运行"指引一键拉取即可。
+> 仓库以轻量形式发布 —— **运行所需的 178MB 资源未入版本控制**，按下方"首次运行"指引一键拉取即可。
 
 ![主界面 — 大厅](./docs/screenshots/01-online.png)
 
@@ -33,7 +33,7 @@
 | 服务器 | `serve.py`：~60 行 `ThreadingHTTPServer`，自定义 MIME + 不可变缓存 |
 | 依赖 | Python 3.7+（无第三方包） |
 | 浏览器 | Chrome / Edge / Firefox / Safari，含移动端响应式 |
-| 资源大小 | 2717 个文件，约 119MB（首次运行按脚本自动拉取） |
+| 资源大小 | 2823 个文件，约 178MB（首次运行按脚本自动拉取） |
 
 ---
 
@@ -46,17 +46,32 @@ git clone https://github.com/xuzeyu91/lol_web.git
 cd lol_web
 ```
 
-### 2. 拉取游戏资源（首次必需，约 119MB / ~2700 个文件）
+### 2. 拉取游戏资源（首次必需，约 178MB / ~2820 个文件）
 
 > 仓库仅跟踪代码与配置文件；游戏所需的地图、模型、音效、贴图等大型静态资源
 > 通过 `tools/mirror.py` 从原站拉取，避免仓库膨胀。
 
 ```bash
-python tools/mirror.py        # 主资源批量抓取（推荐）
-python tools/extra.py         # 补漏：地图 / 控件 / 防御塔破碎
-python tools/extra2.py        # 补漏：技能指示器图标
-python tools/extra3.py        # 补漏：其余缺失资源
+python tools/mirror.py        # 一条命令拉齐全部资源，无需其他补抓脚本
 ```
+
+脚本会依次：下载并解码游戏 bundle → 抓取 audio / vfx / 模型缩放清单 → 解析
+`map12-fast.gltf` 与 `grass-material.json` 拿到地图全部 buffer / 贴图 → 下载 7 个样式表并
+解析其中的 `url()` → 解析 `index.html` 的内联 `src` → 最后对「运行时拼接出来的路径」
+（血条、小地图图标、技能指示器、光标、地图几何 `.bin/.bin.gz`、防御塔碎片 …）做探测式补抓。
+
+输出示例：
+
+```
+files to fetch: 3015 (2684 derived + 331 speculative)
+DONE in 121s
+downloaded: 177.8 MB, 2823 files
+missing(404): 5
+speculative probes not on CDN (harmless): 187
+```
+
+> `missing(404)` 只统计**确定引用**却抓不到的文件（当前为 5 个原站本身就不存在的模型）。
+> `speculative probes` 是拼接猜测路径，原站没有属于正常情况，不计入失败。
 
 > 也可以从原站下载后直接放进 `static/r20260915-miss-fortune-1/assets/`；脚本失败时
 > 用 `python tools/fetch.py <url>` 单点补抓。
@@ -169,7 +184,7 @@ weblol/
 │   │   └── local-bootstrap.js               # 精简的本地图引导器
 │   └── r20260915-miss-fortune-1/        # 首次运行由 tools/mirror.py 生成
 │       ├── style.css / native-shop.css ...  # 7 个原站 CSS
-│       └── assets/                          # ~2700 个静态资源（119MB）—— 不入版本控制
+│       └── assets/                          # ~2820 个静态资源（178MB）—— 不入版本控制
 │           ├── map/         # 嚎哭深渊 GLTF + 二进制几何 + 导航网格
 │           ├── models/      # 16 个英雄 .glb.gz + 防御塔 / 野怪 / 龙 / 男爵
 │           ├── audio/       # 263 个音效 / 召唤师语音
@@ -182,12 +197,21 @@ weblol/
 │           ├── signals/     # 地图信号 / ping 资源
 │           └── fonts/       # 字体文件
 └── tools/                                # 镜像构建脚本（详见 tools/README.md）
-    ├── mirror.py                         # 主批量抓取
-    ├── extra.py / extra2.py / extra3.py   # 补抓脚本
+    ├── mirror.py                         # 一键全量抓取（唯一需要跑的脚本）
     ├── fetch.py                          # 单点补抓
     ├── build_html.py                     # 重写 index.html
     ├── decode.py                         # bundle \uXXXX → 中文
-    └── verify*.js / compare*.js          # Playwright 自动化验证
+    └── allheroes.js / deep_audit.js / audit404.js / net_audit.js / offline_test.js
+                                          # Playwright 自动化验证（支持 PORT 环境变量）
+```
+
+审计脚本统一读取 `PORT`（默认 5173），并需要能解析 `playwright`：
+
+```bash
+PORT=5175 node tools/audit404.js      # 单人一局：所有 4xx / 失败请求
+PORT=5175 node tools/allheroes.js     # 16 位英雄逐一起局
+PORT=5175 node tools/deep_audit.js    # 技能 / 物品 / 信号 / 计分板 / 成就徽章 + 外链检查
+PORT=5175 node tools/offline_test.js  # 是否有任何对外网域的请求
 ```
 
 ---
@@ -226,6 +250,30 @@ weblol/
 
 ---
 
+## 验收结果
+
+在**全新 `git clone` + 一次 `python tools/mirror.py`** 后启动本地服务（Playwright + Chromium）：
+
+| 检查项 | 结果 |
+| --- | --- |
+| 拉取文件数 / 体积 | 2823 个文件 / 177.8 MB |
+| 单人完整一局的 4xx / 失败请求 | **0** |
+| 16 位英雄逐一起局的失败资源 | **0** |
+| 全技能 / 物品 / 信号 / 计分板 / 成就徽章 | **0** |
+| 指向 `lol.hanyue.io` 的请求 | **0** |
+| 其它外部域名请求 | **0**（离线模式） |
+
+干净克隆实测截图：
+
+| 大厅 | 对局 |
+| --- | --- |
+| ![干净克隆大厅](./docs/screenshots/08-fresh-clone-lobby.png) | ![干净克隆对局](./docs/screenshots/07-fresh-clone-game.png) |
+
+> 若 `index.html` 里的 `apiOrigin` 被改成联机地址，则只有联机接口会走外网，
+> 静态资源仍然全部来自本地。
+
+---
+
 ## 已知差异
 
 * **FPS** — 在不支持硬件加速的环境（如 SwiftShader / WSL）下，地图与技能特效帧率较低。
@@ -234,7 +282,9 @@ weblol/
   单人练习 / 海克斯强化 / 商城 / 全部 PvE 玩法均可离线使用。
 * **彩蛋英雄立绘** — Leona / Morgana / Veigar 的原画在原站同样缺失（仅有图标，无 `-loading.jpg`），
   保留原样。
-* **git 仓库体积** — 仅跟踪代码与配置（≈ 4MB）；运行所需的 119MB 静态资源不入版本控制，
+* **5 个模型文件** — `BlueSiege` / `RedSiege` / `SmallPoro` / `Relic` / `Tower` 的 `.glb.gz`
+  在原站同样不存在（游戏实际使用 `SiegeMinion`、`Turret` 等别名），已确认不会被请求。
+* **git 仓库体积** — 仅跟踪代码与配置（≈ 4MB）；运行所需的 178MB 静态资源不入版本控制，
   通过 `tools/mirror.py` 一键拉取。
 
 ---

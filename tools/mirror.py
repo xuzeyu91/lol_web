@@ -99,6 +99,15 @@ if map_manifest not in urls:
         urls.add(map_manifest)
         urls.add('assets/map/navigation.bin')
         urls.add('assets/map/grass-material.json')
+        # grass material points at its own brush texture by file name
+        gm = 'assets/map/grass-material.json'
+        if not os.path.exists(_t('grass-material.json')):
+            _download(BASE + gm, _t('grass-material.json'), 'grass material')
+        gmd = json.load(open(_t('grass-material.json'), encoding='utf-8'))
+        if gmd.get('texture'):
+            urls.add('assets/map/' + gmd['texture'])
+        # relic glow is loaded as  mapBase + "health-relic-glow.png"
+        urls.add('assets/map/health-relic-glow.png')
     except Exception as e:
         print('  (skip map manifest)', e, flush=True)
 
@@ -187,6 +196,11 @@ for c in (
     'skillshot_cone.png', 'skillshot_rectangle.png', 'skillshot_ring.png',
     'color-movetogreen.png', 'movement_indicator.png',
     'movement_indicator4.mesh.json', 'black.png',
+    # particle meshes resolved as "assets/controls/" + name + ".mesh.json"
+    'cursor_moveto.mesh.json', 'shockwavetrail.mesh.json',
+    # mouse cursor sprites: `assets/controls/${cursor}.png`
+    'hand1.png', 'singletarget.png', 'hoverfriendly.png', 'hoverenemy.png',
+    'singletargetenemycannoyattack.png',
     'enemyaoe.png', 'enemyskillshot.png', 'enemyconicrangeindicator.png',
     'enemycircularrangeindicator.png',
     'allyaoe.png', 'allyskillshot.png', 'allyconicrangeindicator.png',

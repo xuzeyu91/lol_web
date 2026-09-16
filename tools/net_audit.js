@@ -1,4 +1,5 @@
 const { chromium } = require('playwright');
+const PORT = process.env.PORT || '5173';
 
 (async () => {
   const browser = await chromium.launch({
@@ -15,13 +16,13 @@ const { chromium } = require('playwright');
       const u = new URL(r.url());
       const host = u.host;
       byHost.set(host, (byHost.get(host) || 0) + 1);
-      if (host !== '127.0.0.1:5173' && !u.protocol.startsWith('data') && !u.protocol.startsWith('blob')) {
+      if (host !== `127.0.0.1:${PORT}` && !u.protocol.startsWith('data') && !u.protocol.startsWith('blob')) {
         external.push(r.resourceType() + '  ' + r.url().slice(0, 140));
       }
     } catch (e) { /* blob:/data: */ }
   });
 
-  await page.goto('http://127.0.0.1:5173/', { waitUntil: 'load', timeout: 60000 });
+  await page.goto(`http://127.0.0.1:${PORT}/`, { waitUntil: 'load', timeout: 60000 });
   await page.waitForTimeout(6000);
 
   // exercise: local mode -> help -> start game -> augment -> a bit of combat

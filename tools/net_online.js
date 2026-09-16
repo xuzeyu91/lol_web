@@ -1,4 +1,5 @@
 const { chromium } = require('playwright');
+const PORT = process.env.PORT || '5173';
 
 (async () => {
   const browser = await chromium.launch({
@@ -9,11 +10,11 @@ const { chromium } = require('playwright');
   const hits = [];
   page.on('request', r => {
     const u = r.url();
-    if (!u.startsWith('http://127.0.0.1:5173') && !u.startsWith('blob:') && !u.startsWith('data:')) {
+    if (!u.startsWith(`http://127.0.0.1:${PORT}`) && !u.startsWith('blob:') && !u.startsWith('data:')) {
       hits.push(u.slice(0, 160));
     }
   });
-  await page.goto('http://127.0.0.1:5173/', { waitUntil: 'load', timeout: 60000 });
+  await page.goto(`http://127.0.0.1:${PORT}/`, { waitUntil: 'load', timeout: 60000 });
   await page.waitForTimeout(6000);
   await page.fill('#onlineName', '本地测试').catch(() => {});
   await page.click('#onlineConnect').catch(() => {});
