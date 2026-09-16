@@ -12,8 +12,18 @@ tools/game.decoded.js
 tools/audio_manifest.json
 tools/vfx_manifest.json
 tools/m_scales.json
+tools/map12-fast.gltf.json
 tools/assets.txt
 tools/missing.txt
+tools/m_overrides.json
+# 旧版本 mirror.py 会把中间产物写在仓库根目录，一并忽略
+/game.js
+/game.decoded.js
+/audio_manifest.json
+/vfx_manifest.json
+/m_scales.json
+/map12-fast.gltf.json
+/missing.txt
 
 # 工作区元数据 / 镜像开发痕迹
 .workbuddy-ai/
