@@ -14,10 +14,9 @@ echo.
 rem === 检查资源是否就绪（GitHub clone 时 .gitignore 排除了 178MB 资源）===
 set SAMPLE=static\r20260915-miss-fortune-1\assets\Ashe-loading.jpg
 if not exist "%SAMPLE%" (
-  echo   [!] 资源文件未就绪，自动从原站拉取（约 120MB / 1-2 分钟）...
+  echo   [!] 资源文件未就绪，自动从原站拉取（约 178MB / 2-3 分钟）...
   echo       如需跳过请按 Ctrl+C 终止。
   echo.
-  if exist "tools\decode.py"  python tools\decode.py  2>nul
   if exist "tools\mirror.py" (
     python tools\mirror.py
   ) else (
@@ -29,7 +28,6 @@ if not exist "%SAMPLE%" (
     echo.
     echo   [错误] 资源拉取失败。请检查网络后手动重试:
     echo          python tools\mirror.py
-    echo          python tools\extra.py
     pause
     exit /b 1
   )

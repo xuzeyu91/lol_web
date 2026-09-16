@@ -13,10 +13,9 @@ echo "  *** 嚎哭深渊 - 海克斯大乱斗(本地镜像)"
 echo
 
 if [ ! -f "$SAMPLE" ]; then
-  echo "  [!] 资源文件未就绪，自动从原站拉取（约 120MB / 1-2 分钟）..."
+  echo "  [!] 资源文件未就绪，自动从原站拉取（约 178MB / 2-3 分钟）..."
   echo "      如需跳过请按 Ctrl+C 终止。"
   echo
-  [ -f tools/decode.py ] && python3 tools/decode.py 2>/dev/null || true
   if [ -f tools/mirror.py ]; then
     python3 tools/mirror.py
   else
