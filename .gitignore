@@ -2,21 +2,25 @@
 __pycache__/
 *.pyc
 
-# 静态资源全部来自镜像，无须纳入版本控制 —— 占 178MB，可随时按 tools/README.md
-# 的步骤重新拉取
+# 静态资源全部来自镜像，无须纳入版本控制 —— 占 178MB，可随时按
+# `python tools/mirror.py` 重新拉取
 static/r20260915-miss-fortune-1/assets/
 
-# 工作区元数据 / 镜像过程中可能遗留的开发痕迹
+# mirror.py 首次运行时生成的中间产物（可重新拉取）
+tools/game.js
+tools/game.decoded.js
+tools/audio_manifest.json
+tools/vfx_manifest.json
+tools/m_scales.json
+tools/assets.txt
+tools/missing.txt
+
+# 工作区元数据 / 镜像开发痕迹
 .workbuddy-ai/
 tools/compare/
 tools/*.log
-tools/nav_test
-tools/m_*.json
-tools/vfx_manifest.json
-tools/audio_manifest.json
-tools/game.decoded.js
-tools/assets.txt
-tools/missing.txt
+tools/final-*.png
+tools/shots/
 
 # 项目文档目录（含 README 截图）需要纳入版本控制
 !docs/

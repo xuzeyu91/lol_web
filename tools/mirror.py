@@ -15,12 +15,40 @@ DEST = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                     '..', 'static', 'r20260915-miss-fortune-1')
 DEST = os.path.normpath(DEST)
 
+BUNDLE_URL = ('https://lol.hanyue.io/static/bootstrap/'
+              'game-r20260915-close-guard-1.js')
+
+
+def _download(url, dest, label):
+    print('  downloading %s ...' % label, flush=True)
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+    with urllib.request.urlopen(req, timeout=180) as r:
+        data = r.read()
+    open(dest, 'wb').write(data)
+    print('  %s -> %s (%d bytes)' % (label, dest, len(data)), flush=True)
+    return data
+
+
+# A fresh git clone has neither the bundle nor the decoded dump (both are
+# generated artifacts), so pull them before scanning for asset paths.
+if not os.path.exists('game.js'):
+    _download(BUNDLE_URL, 'game.js', 'game bundle')
+
 DECODED = 'game.decoded.js'
-if not os.path.exists(DECODED) and os.path.exists('game.js'):
-    raw = open('game.js', encoding='utf-8').read()
+if not os.path.exists(DECODED):
+    raw = open('game.js', encoding='utf-8', errors='replace').read()
     open(DECODED, 'w', encoding='utf-8').write(
         re.sub(r'\\u([0-9a-fA-F]{4})', lambda m: chr(int(m.group(1), 16)), raw))
-    print('  regenerated game.decoded.js')
+    print('  regenerated game.decoded.js', flush=True)
+
+# manifests are also generated artifacts
+for dest, label in (
+    ('audio_manifest.json', 'assets/audio/manifest.json'),
+    ('vfx_manifest.json',   'assets/vfx/manifest.json'),
+    ('m_scales.json',       'assets/models/scales.json'),
+):
+    if not os.path.exists(dest):
+        _download(BASE + label, dest, dest)
 
 s = open(DECODED, encoding='utf-8').read()
 urls = set()
