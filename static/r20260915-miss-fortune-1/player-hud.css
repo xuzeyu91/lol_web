@@ -1,0 +1,46 @@
+#hud.native-player-hud{position:fixed;inset:auto 0 0;width:100%;height:0;min-height:0;margin:0;padding:0;display:block;border:0;box-shadow:none;background:none;transform:none;z-index:5;pointer-events:none}
+.native-player-hud .nh-stage{position:absolute;width:936px;height:265px;transform-origin:0 100%;pointer-events:none;font-family:"LoL CN";color:#cdbe91}
+.native-player-hud .nh-layer{pointer-events:none}
+.native-player-hud .nh-layer>button,.native-player-hud .nh-button,.native-player-hud .nh-passive,.native-player-hud .nh-utility-slot,.native-player-hud .nh-portrait{pointer-events:auto}
+.native-player-hud .nh-sprite{max-width:none;display:block;user-select:none;pointer-events:none;object-fit:fill}
+.native-player-hud .nh-text{display:flex;align-items:center;line-height:1;white-space:nowrap;text-shadow:0 1px 1px #000;user-select:none;pointer-events:none}
+.native-player-hud .nh-icon{object-fit:cover;display:block;pointer-events:none;user-select:none}
+.native-player-hud .nh-portrait{padding:0;border:0;border-radius:50%;object-fit:cover;box-shadow:none;filter:none}
+.native-player-hud button{padding:0;margin:0;border:0;border-radius:0;background:none;box-shadow:none;transition:none;overflow:visible;color:inherit;font:inherit}
+.native-player-hud button:hover,.native-player-hud button:active{border:0;background:none;transform:none;box-shadow:none}
+.native-player-hud button:disabled{opacity:1;cursor:default}
+.native-player-hud button:focus-visible{outline:1px solid #c8aa6e;outline-offset:1px}
+.native-player-hud [hidden]{display:none!important}
+.native-player-hud .nh-hover{display:none}
+.native-player-hud button:hover .nh-hover{display:block}
+.native-player-hud .nh-meter{overflow:hidden;pointer-events:auto}
+.native-player-hud .nh-meter-fill{position:relative;height:100%;overflow:hidden}
+.native-player-hud .nh-animation{mix-blend-mode:screen}
+.native-player-hud .nh-no-resource .nh-meter-fill{visibility:hidden}
+.native-player-hud .nh-accessible{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.native-player-hud .nh-ability{width:64px;height:64px}
+.native-player-hud .nh-ability .cd{background:none;font:inherit;inset:auto;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.native-player-hud .nh-ability .cd:empty{display:none}
+.native-player-hud .nh-equipment{display:block;min-width:0;min-height:0}
+.native-player-hud #gold{font-family:"LoL Title";font-size:20px;color:#fff799;margin:0}
+.native-player-hud .nh-radial{mask-repeat:no-repeat;mask-size:100% 100%}
+.native-hud-active #hint{bottom:calc(var(--native-hud-height,120px) + 14px)}
+.native-hud-active #minimap{bottom:8px;right:8px}
+@media(max-width:700px){.native-hud-active #minimap{bottom:calc(var(--native-hud-height,120px) + 20px);width:108px;height:108px}.native-hud-active #hint{display:none}}
+
+.native-player-hud #equipmentSlots{display:block;margin:0;padding:0;gap:0}
+.native-player-hud #equipmentSlots .equipment-slot{margin:0;padding:0;border:0;background:none;box-shadow:none}
+.native-player-hud #equipmentSlots img,.native-player-hud #equipmentSlots span{border:0;background:none;box-shadow:none;object-fit:fill}
+.native-player-hud #equipmentSlots .nh-text{display:flex;align-items:center;line-height:1}
+.native-player-hud #equipmentSlots .nh-hover{display:none}
+.native-player-hud #equipmentSlots button:not(:disabled):hover .nh-hover{display:block}
+.native-player-hud .nh-recall{border-radius:50%;filter:grayscale(1) brightness(.45)}
+
+.native-hud-active #hint{display:none}
+.native-player-hud .nh-resource-grit .nh-meter-fill{filter:sepia(.8) saturate(2.5) hue-rotate(335deg)}
+
+/* Adapted state timer using the extracted native resource-fill texture. */
+.native-player-hud .nh-wind-ready{position:absolute;left:250px;top:75px;width:407px;height:25px;border:2px solid #877449;background:#071719;pointer-events:none;overflow:hidden}
+.native-player-hud .nh-wind-ready[hidden]{display:none}
+.native-player-hud .nh-wind-fill{position:absolute;inset:0 auto 0 0;background-size:100% 100%;background-repeat:no-repeat}
+.native-player-hud .nh-wind-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#f4f0da;font-size:16px;text-shadow:0 1px 2px #000}

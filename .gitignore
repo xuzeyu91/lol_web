@@ -1,0 +1,30 @@
+# Python / 缓存 / 临时文件
+__pycache__/
+*.pyc
+
+# 静态资源全部来自镜像，无须纳入版本控制 —— 占 178MB，可随时按 tools/README.md
+# 的步骤重新拉取
+static/r20260915-miss-fortune-1/assets/
+
+# 工作区元数据 / 镜像过程中可能遗留的开发痕迹
+.workbuddy-ai/
+tools/compare/
+tools/*.log
+tools/nav_test
+tools/m_*.json
+tools/vfx_manifest.json
+tools/audio_manifest.json
+tools/game.decoded.js
+tools/assets.txt
+tools/missing.txt
+
+# 项目文档目录（含 README 截图）需要纳入版本控制
+!docs/
+
+# Windows / macOS 临时
+.DS_Store
+Thumbs.db
+
+# 编辑器
+.vscode/
+.idea/

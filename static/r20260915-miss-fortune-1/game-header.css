@@ -1,0 +1,13 @@
+#nativeGameHeader{position:fixed;right:0;top:-1px;width:475px;height:61px;z-index:7;pointer-events:none;transform-origin:100% 0}
+#nativeGameHeader .ngh-sprite{max-width:none;object-fit:fill;pointer-events:none;user-select:none}
+#nativeGameHeader .ngh-text{display:flex;align-items:center;line-height:1;white-space:nowrap;font-variant-numeric:tabular-nums;text-shadow:0 1px 2px #000;pointer-events:auto}
+#nativeGameHeader [hidden]{display:none!important}
+#nativeGameHeader #timer{font-family:"LoL Title";letter-spacing:0}
+.native-game-header-active header.local-game-toolbar{height:auto;right:auto;left:0;top:0;padding:12px 18px;gap:20px;background:none;border:0;align-items:center}
+.native-game-header-active .local-game-toolbar .brand{font-size:17px;gap:8px}
+.native-game-header-active .local-game-toolbar .brand .crest{font-size:24px}
+.native-game-header-active .local-game-toolbar .brand small{font-size:8px;letter-spacing:2px}
+.native-game-header-active .local-game-toolbar .brand .mode{display:none}
+.native-game-header-active .local-game-toolbar nav{gap:5px}
+.native-game-header-active .local-game-toolbar nav button{height:26px;padding:0 7px;font-size:11px}
+@media(max-width:1000px){.native-game-header-active header.local-game-toolbar{top:40px;padding:6px 12px}.native-game-header-active .local-game-toolbar .brand{display:none}}

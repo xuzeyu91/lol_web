@@ -1,0 +1,82 @@
+/* UI coordinates, atlas crops and button states are sourced from the installed UIBase. */
+#shopDialog.native-shop{padding:0;border:0;background:transparent;max-width:none;max-height:none;overflow:visible;box-shadow:none;color:#cdbe91;margin:auto}
+#shopDialog.native-shop::backdrop{background:#0004;backdrop-filter:none}
+.native-shop .ns-stage{position:relative;width:1294px;height:784px;transform-origin:0 0;font-family:"LoL CN",sans-serif;color:#cdbe91;isolation:isolate}
+.native-shop *{box-sizing:border-box}
+.native-shop button{border:0;padding:0;border-radius:0;background:none;box-shadow:none;transition:none;color:inherit;min-width:0;min-height:0}
+.native-shop button:hover,.native-shop button:active{background:none;transform:none;border:0}
+.native-shop button:disabled{opacity:1;cursor:default}
+.native-shop button:focus-visible{outline:1px solid #c8aa6e;outline-offset:0}
+.native-shop .ns-background,.native-shop .ns-sprite,.native-shop .ns-text{pointer-events:none;user-select:none}
+.native-shop .ns-sprite{display:block;max-width:none;object-fit:fill}
+.native-shop .ns-text{display:flex;align-items:center;line-height:1.18;white-space:nowrap}
+.native-shop .ns-text[style*="text-align: center"]{justify-content:center}
+.native-shop .ns-button{z-index:3;overflow:visible}
+.native-shop .ns-results,.native-shop .ns-details,.native-shop .ns-docks,.native-shop .ns-filters{pointer-events:none}
+.native-shop .ns-results>*,.native-shop .ns-details>*,.native-shop .ns-docks>*,.native-shop .ns-filters>*{pointer-events:auto}
+.native-shop .ns-results>.ns-text,.native-shop .ns-details>.ns-text,.native-shop .ns-details>.ns-sprite{pointer-events:none}
+.native-shop .ns-results[hidden],.native-shop .ns-filters[hidden],.native-shop .ns-tooltip[hidden]{display:none}
+.native-shop .ns-search{padding:0;border:0;background:transparent;color:#a09b8c;font:16px "LoL CN";outline:none;z-index:4}
+.native-shop .ns-search::placeholder{color:#6e6b60}
+.native-shop .ns-affordable{display:flex;align-items:center;gap:8px;font-size:14px;color:#a09b8c}
+.native-shop .ns-affordable input{accent-color:#c8aa6e;width:14px;height:14px;margin:0}
+.native-shop .ns-item{display:block;overflow:visible}
+.native-shop .ns-item-image{object-fit:cover;display:block;pointer-events:none;user-select:none}
+.native-shop .ns-hover-only,.native-shop .ns-selected-only{display:none}
+.native-shop .is-selected>.ns-selected-only,.native-shop button:hover>.ns-hover-only{display:block}
+.native-shop .ns-brief{white-space:normal;line-height:1.35;align-items:flex-start;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;height:73px!important;text-align:center}
+.native-shop .ns-rec-card{overflow:visible}
+.native-shop .ns-list-scroll{overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#645334 #071219;padding:0 9px 15px 0}
+.native-shop .ns-list-scroll::-webkit-scrollbar,.native-shop .ns-description::-webkit-scrollbar{width:6px}
+.native-shop .ns-list-scroll::-webkit-scrollbar-thumb,.native-shop .ns-description::-webkit-scrollbar-thumb{background:#645334;border:1px solid #987b4a}
+.native-shop .ns-group{padding:0;margin:0 0 10px;border:0}
+.native-shop .ns-group h3{height:36px;padding:6px 0 0 6px;margin:0;font:18px "LoL Title";color:#cdbe91;display:flex;align-items:center}
+.native-shop .ns-grid{display:grid;grid-template-columns:repeat(10,57px);grid-auto-rows:76px;gap:0}
+.native-shop .ns-grid>.ns-item{position:relative!important;left:auto!important;top:auto!important}
+.native-shop .ns-empty{color:#a09b8c;font-size:16px;margin:30px}
+.native-shop .ns-price{font-variant-numeric:tabular-nums}
+.native-shop .ns-description{overflow:auto;overscroll-behavior:contain;padding-right:8px;scrollbar-width:thin;scrollbar-color:#645334 #071219}
+.native-shop .ns-description p{margin:0 0 12px;color:#a09b8c;font:16px/1.6 "LoL CN";white-space:pre-line}
+.native-shop .ns-description .ns-runtime-note{font-size:12px;color:#6e6b60;border-top:1px solid #352e22;padding-top:12px}
+.native-shop .ns-reason{font:14px/1.35 "LoL CN";color:#a09b8c;display:flex;align-items:center;justify-content:flex-end;text-align:right;pointer-events:none}
+.native-shop .ns-live{font:12px "LoL CN";color:#c8aa6e;pointer-events:none;text-align:center}
+.native-shop #shopGold{font:24px "LoL Title";color:#f0e6d2}
+.native-shop .ns-dock{overflow:hidden;z-index:6;outline:none}
+.native-shop .ns-dock-opened{display:none}
+.native-shop .ns-dock.is-expanded .ns-dock-opened{display:block}
+.native-shop .ns-dock.is-expanded .ns-dock-closed{display:none}
+.native-shop .ns-dock-content{pointer-events:none}
+.native-shop .ns-dock-content>*{pointer-events:auto}
+.native-shop [data-dock=inventory]:not(.is-expanded) .ns-dock-content{visibility:hidden}
+.native-shop .ns-stack{position:absolute;bottom:1px;right:2px;font:12px "LoL Title";color:#fff;text-shadow:1px 1px #000}
+.native-shop .ns-inventory-empty{background:#010a0d;border:1px solid #463a26}
+.native-shop .ns-no-upgrades{color:#463f31;font-size:18px}
+.native-shop .ns-tree{overflow:hidden}
+.native-shop .ns-tooltip{position:absolute;width:340px;max-height:500px;overflow:auto;background:#010a10f7;border:2px solid #785a28;padding:14px 17px;z-index:30;pointer-events:none;box-shadow:0 5px 16px #0008;color:#a09b8c}
+.native-shop .ns-tooltip strong{display:block;font:18px "LoL Title";color:#f0e6d2}
+.native-shop .ns-tooltip-cost{display:block;margin:7px 0 10px;color:#c8aa6e;font:14px "LoL CN"}
+.native-shop .ns-tooltip p{white-space:pre-line;margin:0;font:14px/1.55 "LoL CN";color:#a09b8c}
+
+.native-shop .ns-dock:not(.is-expanded) .ns-dock-extra{visibility:hidden}
+
+.native-shop .ns-dock{overflow:visible}
+.native-shop .ns-dock:not(.is-expanded)>.ns-button{visibility:hidden}
+.native-shop .ns-upgrade-menu{z-index:12}
+.native-shop .ns-upgrade-menu[hidden],.native-shop .ns-search-pane[hidden]{display:none}
+.native-shop .ns-upgrade-list{overflow:auto;scrollbar-width:thin;scrollbar-color:#645334 #071219}
+.native-shop .ns-upgrade-row{display:flex;width:100%;height:60px;align-items:center;gap:12px;padding:8px 10px;color:#cdbe91;font-size:14px;text-align:left}
+.native-shop .ns-upgrade-row:hover{background:#19323b}
+.native-shop .ns-upgrade-row img{width:40px;height:40px;border:1px solid #785a28}
+.native-shop .ns-search-pane{z-index:9;pointer-events:none}
+.native-shop .ns-search-pane>*{pointer-events:auto}
+.native-shop .ns-search-pane>.ns-sprite,.native-shop .ns-search-pane>.ns-text{pointer-events:none}
+.native-shop .ns-search-shade{background:#0008}
+.native-shop .ns-search-list{overflow:auto;scrollbar-width:thin;scrollbar-color:#645334 #071219}
+.native-shop .ns-search-list>.ns-item{position:relative!important;left:auto!important;top:auto!important}
+.native-shop .ns-search-list .ns-text{overflow:hidden}
+.native-shop .ns-search-preview{pointer-events:none}
+.native-shop .ns-search-description{font:16px/1.6 "LoL CN";color:#a09b8c;white-space:pre-line;overflow:auto;pointer-events:auto;scrollbar-width:thin}
+
+.native-shop .ns-search-list{overflow-x:hidden}
+
+.native-shop .ns-upgrade-back{border-style:solid;border-width:28px 0 54px;border-image-slice:28 0 54 fill;border-image-width:28px 0 54px;border-image-repeat:stretch;pointer-events:none}
