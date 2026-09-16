@@ -1,12 +1,28 @@
-"""Mirror all lol.hanyue.io static assets to a local folder."""
+"""Mirror all lol.hanyue.io static assets to a local folder.
+
+Usage:
+    python mirror.py
+    # (re)generate the decoded bundle if you don't have game.decoded.js:
+    curl -sL https://lol.hanyue.io/static/bootstrap/game-r20260915-close-guard-1.js -o game.js
+    python decode.py   # creates game.decoded.js with \\uXXXX → Chinese
+"""
 import json, os, re, sys, threading, time
 import urllib.request, urllib.error
 from concurrent.futures import ThreadPoolExecutor
 
 BASE = "https://lol.hanyue.io/static/r20260915-miss-fortune-1/"
-DEST = r"D:\AI\AIDotNet\weblol\static\r20260915-miss-fortune-1"
+DEST = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                    '..', 'static', 'r20260915-miss-fortune-1')
+DEST = os.path.normpath(DEST)
 
-s = open('game.decoded.js', encoding='utf-8').read()
+DECODED = 'game.decoded.js'
+if not os.path.exists(DECODED) and os.path.exists('game.js'):
+    raw = open('game.js', encoding='utf-8').read()
+    open(DECODED, 'w', encoding='utf-8').write(
+        re.sub(r'\\u([0-9a-fA-F]{4})', lambda m: chr(int(m.group(1), 16)), raw))
+    print('  regenerated game.decoded.js')
+
+s = open(DECODED, encoding='utf-8').read()
 urls = set()
 
 # literal asset paths from bundle
@@ -35,6 +51,9 @@ for h in heroes:
     urls.add('assets/%s.png' % h)
     urls.add('assets/models/%s.glb.gz' % h)
     urls.add('assets/ui/minimap-%s.png' % h)
+    # Skill preview frames used by the renderer — 4 frames per hero
+    for i in range(4):
+        urls.add('assets/ui/%s-%d.png' % (h, i))
 
 for h in json.load(open('m_scales.json', encoding='utf-8')):
     urls.add('assets/models/%s.glb.gz' % h)
