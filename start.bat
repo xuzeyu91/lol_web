@@ -4,19 +4,19 @@ cd /d "%~dp0"
 set PORT=5173
 
 echo.
-echo   î„´î„´î„´ åšŽå“­æ·±æ¸Š Â· æµ·å…‹æ–¯å¤§ä¹±æ–—ï¼ˆæœ¬åœ°é•œåƒï¼‰
+echo   *** º¿¿ÞÉîÔ¨ - º£¿ËË¹´óÂÒ¶·(±¾µØ¾µÏñ)
 echo.
-echo   æ­£åœ¨å¯åŠ¨æœ¬åœ°æœåŠ¡ http://127.0.0.1:%PORT%/
-echo   å…³é—­æœ¬çª—å£å³å¯åœæ­¢æœåŠ¡
+echo   ÕýÔÚÆô¶¯±¾µØ·þÎñ http://127.0.0.1:%PORT%/
+echo   ¹Ø±Õ±¾´°¿Ú¼´¿ÉÍ£Ö¹·þÎñ
 echo.
 
-rem 1 ç§’åŽè‡ªåŠ¨æ‰“å¼€æµè§ˆå™¨
+rem 1 Ãëºó×Ô¶¯´ò¿ªä¯ÀÀÆ÷
 start "" "http://127.0.0.1:%PORT%/" >nul 2>&1
 
 python serve.py %PORT%
 if errorlevel 1 (
   echo.
-  echo   [!] æœªæ‰¾åˆ° pythonï¼Œè¯·å®‰è£… Python 3 å¹¶å‹¾é€‰ "Add to PATH"
-  echo       æˆ–æ‰‹åŠ¨æ‰§è¡Œ:  python serve.py
+  echo   [!] Î´ÕÒµ½ python£¬Çë°²×° Python 3 ²¢¹´Ñ¡ "Add to PATH"
+  echo       »òÊÖ¶¯Ö´ÐÐ:  python serve.py
   pause
 )
